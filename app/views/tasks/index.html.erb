@@ -1,0 +1,33 @@
+<p id="notice" class="text-success"><%= notice %></p>
+
+<h1>tasks</h1>
+<%= link_to 'New Task', new_task_path %>
+
+<div class="mt-2 mb-2">
+  <%[["月", 1], ["火", 2], ["水", 4], ["木", 8], ["金", 16], ["土", 32], ["日", 64], ["全体", 127]].each do |day, bit_value| %>
+   <%= link_to day, tasks_path(is_loop: bit_value), class: "btn #{params[:is_loop].to_i == bit_value ? "btn-primary" : "btn-secondary"} btn-sm mr-2 d-inline-block" %>
+  <% end %>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th>実行曜日</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.body %></td>
+        <td><%= task.display_is_loop(task.is_loop) %></td>
+        <td><%= link_to 'Destroy', method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-sm btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+        
